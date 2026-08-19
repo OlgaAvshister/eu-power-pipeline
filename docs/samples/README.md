@@ -1,4 +1,4 @@
-\# API response samples
+# API response samples
 
 
 
