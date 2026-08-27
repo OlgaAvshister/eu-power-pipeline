@@ -18,6 +18,9 @@ Captured: 2026-08-19
 
 \- `public\_power\_de\_2026-08-19\_truncated.json` — Germany, full day requested, response silently truncated to 34 points
 
+- `public_power_de_2026-08-19_revised.json` — same request as above, re-issued
+  8 days later: 96 points instead of 34, and previously published values revised
+  by ~0.01%
 
 
 Data source: Energy-Charts (energy-charts.info), Fraunhofer ISE, licensed under CC BY 4.0

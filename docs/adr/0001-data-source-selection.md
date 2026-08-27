@@ -49,7 +49,7 @@ All observations below were made manually against the live API in August 2026.
 
 5. **The set of indicators depends on the country.** Germany returns 21 series,
    France 19. Germany has no `Nuclear` (phased out in 2023); France has no coal
-   series but has `Battery` and `Battery Consumption`.
+   series but has `Battery` and `Battery Consumption`. The set also changes over time — Germany's 2015 data includes `Nuclear`, which disappeared after the 2023 phase-out.
 
 6. **Indicators are heterogeneous within a single array.** Generation in MW,
    consumption (`Load`), signed cross-border flow, storage consumption
@@ -78,14 +78,16 @@ All observations below were made manually against the live API in August 2026.
 12. **No authentication required.** No API key, no registration, no rate limit
     observed during exploration.
 
+13. **Published values are revised retroactively.** A full-day response captured on 2026-08-19 was compared with the same request re-issued eight days later. The array grew from 34 to 96 points, and previously published values changed by roughly 0.01% (e.g. Load[0]: 40274.8 → 40270.4). Derived percentage series shifted more noticeably (Renewable share of generation[0]: 50.8 → 49.4). Both snapshots are stored in `docs/samples/` for reference.
+
 ## Consequences
 
 ### What we get for free
 
 - No authentication, no registration, no quota management — CI can run
   without secrets.
-- Long history available, enabling a meaningful backfill rather than a
-  few days of data.
+- History available at least back to 2015 at the same 15-minute resolution,
+  enabling a meaningful backfill. Earliest available date not determined.
 - A verifiable internal relation in the data (see observation 9) that can be
   turned into a real data quality test, not a formal one.
 - Open license, so the repository can be public with proper attribution.
@@ -118,6 +120,3 @@ All observations below were made manually against the live API in August 2026.
   currently `false` and is captured on load so the change would be detected.
 - **The energy balance discrepancy is not explained** (observation 10). Metrics
   built on total generation may be misleading until the cause is understood.
-- **Revision behaviour is not fully characterised.** It is confirmed that `null`
-  values are filled in later, but whether already-published numbers are restated
-  has not been verified. A comparison experiment is in progress.
