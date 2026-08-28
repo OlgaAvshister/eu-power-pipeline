@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint Python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install linters
+        run: pip install ruff
+
+      - name: Run ruff
+        run: ruff check ingestion/ dags/
+
+  dbt:
+    name: Build dbt project
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: power
+          POSTGRES_USER: power
+          POSTGRES_PASSWORD: power_ci_pw
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_DB: power
+      POSTGRES_USER: power
+      POSTGRES_PASSWORD: power_ci_pw
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dbt
+        run: pip install dbt-postgres==1.9.0
+
+      - name: Create schemas
+        run: |
+          PGPASSWORD=power_ci_pw psql -h localhost -U power -d power -f init.sql
+
+      - name: Install dbt packages
+        working-directory: dbt_power
+        run: dbt deps --profiles-dir .
+
+      - name: Parse project
+        working-directory: dbt_power
+        run: dbt parse --profiles-dir .
+
+      - name: Build models and run tests
+        working-directory: dbt_power
+        run: dbt build --profiles-dir .
