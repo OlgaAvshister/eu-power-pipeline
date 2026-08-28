@@ -8,4 +8,4 @@ venv/
 target/
 dbt_packages/
 logs/
-data/raw/
+data/raw/.user.yml
