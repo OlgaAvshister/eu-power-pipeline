@@ -1,0 +1,25 @@
+production_type,category,unit,is_renewable
+Battery,storage,MW,false
+Battery Consumption,storage_consumption,MW,false
+Biomass,generation,MW,true
+Cross border electricity trading,flow,MW,false
+Fossil brown coal / lignite,generation,MW,false
+Fossil coal-derived gas,generation,MW,false
+Fossil gas,generation,MW,false
+Fossil hard coal,generation,MW,false
+Fossil oil,generation,MW,false
+Geothermal,generation,MW,true
+Hydro pumped storage,storage,MW,false
+Hydro pumped storage consumption,storage_consumption,MW,false
+Hydro Run-of-River,generation,MW,true
+Hydro water reservoir,generation,MW,true
+Load,load,MW,false
+Nuclear,generation,MW,false
+Others,generation,MW,false
+Renewable share of generation,share,%,false
+Renewable share of load,share,%,false
+Residual load,derived,MW,false
+Solar,generation,MW,true
+Waste,generation,MW,false
+Wind offshore,generation,MW,true
+Wind onshore,generation,MW,true
