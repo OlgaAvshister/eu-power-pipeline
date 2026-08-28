@@ -45,18 +45,18 @@ def save_to_raw(payload, source_url, country, date_from, date_to):
 
     conn = psycopg2.connect(**DB_CONFIG)
     try:
-        with conn:
-            with conn.cursor() as cur:
-                cur.execute(sql, (
-                    country,
-                    date_from,
-                    date_to,
-                    source_url,
-                    json.dumps(payload),
-                    points_received,
-                ))
+        with conn, conn.cursor() as cur:
+            cur.execute(sql, (
+                country,
+                date_from,
+                date_to,
+                source_url,
+                json.dumps(payload),
+                points_received,
+            ))
     finally:
         conn.close()
+
 
     return points_received
 

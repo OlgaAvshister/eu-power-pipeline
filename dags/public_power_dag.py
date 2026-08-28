@@ -1,9 +1,9 @@
+import sys
 from datetime import timedelta
 
 import pendulum
 from airflow.sdk import dag, task
 
-import sys
 sys.path.insert(0, "/opt/airflow")
 
 from ingestion.fetch_public_power import fetch_public_power, save_to_raw
