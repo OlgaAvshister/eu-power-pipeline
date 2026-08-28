@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: fct_power_generation
+    description: |
+      Power generation, load and derived indicators by country and timestamp.
+      Grain: one row per country, timestamp and production type.
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - country
+            - ts_utc
+            - production_type
+    columns:
+      - name: country
+        description: ISO country code as used by the source API
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                  values: ['de', 'fr']
+      - name: ts_utc
+        description: Measurement timestamp in UTC
+        tests:
+          - not_null
+      - name: production_type
+        description: Indicator name as reported by the source
+        tests:
+          - not_null
+          - relationships:
+              to: ref('production_types')
+              field: production_type
+      - name: category
+        description: Indicator category from the dimension table
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                  values: ['generation', 'load', 'derived', 'flow', 'storage', 'storage_consumption', 'share']
+      - name: value
+        description: Measured value in the unit given by the unit column
