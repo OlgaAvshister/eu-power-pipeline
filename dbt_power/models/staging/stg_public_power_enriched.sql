@@ -16,7 +16,7 @@ select
     facts.production_type,
     types.category,
     types.unit,
-    types.is_renewable,
+    types.renewable_share,
     facts.value,
     facts.loaded_at
 from facts

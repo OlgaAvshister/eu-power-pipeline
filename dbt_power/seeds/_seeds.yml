@@ -1,0 +1,10 @@
+version: 2
+
+seeds:
+  - name: production_types
+    config:
+      column_types:
+        production_type: text
+        category: text
+        unit: text
+        renewable_share: numeric
