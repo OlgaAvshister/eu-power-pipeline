@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Landing zone with unmodified API responses
+    schema: raw
+    tables:
+      - name: public_power
+        description: Raw responses from the Energy-Charts public_power endpoint
