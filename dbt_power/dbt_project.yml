@@ -33,3 +33,6 @@ models:
   dbt_power:
     staging:
       +materialized: view
+    marts:
+      +materialized: table
+      +schema: marts
