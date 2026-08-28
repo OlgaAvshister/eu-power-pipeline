@@ -1,6 +1,6 @@
 # eu-power-pipeline
 
-
+![CI](https://github.com/OlgaAvshister/eu-power-pipeline/actions/workflows/ci.yml/badge.svg)
 
 End-to-end data pipeline for European electricity generation data:
 
