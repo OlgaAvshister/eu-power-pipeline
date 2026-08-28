@@ -3,7 +3,7 @@ with ranked as (
         *,
         row_number() over (
             partition by country, ts_utc, production_type
-            order by loaded_at desc
+            order by (value is null), loaded_at desc
         ) as rn
     from {{ ref('stg_public_power') }}
 )
