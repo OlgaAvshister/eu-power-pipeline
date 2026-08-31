@@ -1,1 +1,202 @@
-{"unix_seconds":[1786752000,1786752900,1786753800,1786754700,1786755600],"production_types":[{"name":"Hydro pumped storage consumption","data":[-10.5,-10.4,-10.4,-10.4,-10.5]},{"name":"Battery Consumption","data":[-7.2,-8.8,-8.1,-12.7,-21.7]},{"name":"Cross border electricity trading","data":[-4356.1,-4677.8,-4815.5,-5486.0,-6413.0]},{"name":"Nuclear","data":[31488.0,31427.8,31400.2,31560.5,31758.1]},{"name":"Hydro Run-of-River","data":[2309.6,2304.7,2298.3,2293.2,2306.5]},{"name":"Biomass","data":[285.9,286.3,288.0,288.9,288.6]},{"name":"Fossil oil","data":[35.2,35.2,35.2,35.2,35.2]},{"name":"Fossil gas","data":[4362.4,4111.5,3798.8,3823.9,3859.1]},{"name":"Hydro water reservoir","data":[1510.0,1153.2,1137.4,1139.0,1112.6]},{"name":"Hydro pumped storage","data":[953.9,866.5,830.0,513.6,704.5]},{"name":"Battery","data":[3.0,2.6,2.5,2.5,1.4]},{"name":"Waste","data":[444.2,446.6,445.4,447.1,447.8]},{"name":"Wind offshore","data":[623.4,624.1,620.0,654.4,743.5]},{"name":"Wind onshore","data":[2642.8,2649.0,2598.4,2672.2,2872.5]},{"name":"Solar","data":[0.0,0.0,0.0,0.0,0.0]},{"name":"Load","data":[39620.8,38623.7,37940.5,37253.2,36904.1]},{"name":"Residual load","data":[36354.6,35350.6,34722.1,33926.6,33288.1]},{"name":"Renewable share of load","data":[19.2,18.7,18.9,19.5,20.5]},{"name":"Renewable share of generation","data":[17.4,16.8,16.8,16.9,17.4]}],"deprecated":false}
+{
+    "unix_seconds": [
+        1786752000,
+        1786752900,
+        1786753800,
+        1786754700,
+        1786755600
+    ],
+    "production_types": [
+        {
+            "name": "Hydro pumped storage consumption",
+            "data": [
+                -10.5,
+                -10.4,
+                -10.4,
+                -10.4,
+                -10.5
+            ]
+        },
+        {
+            "name": "Battery Consumption",
+            "data": [
+                -7.2,
+                -8.8,
+                -8.1,
+                -12.7,
+                -21.7
+            ]
+        },
+        {
+            "name": "Cross border electricity trading",
+            "data": [
+                -4356.1,
+                -4677.8,
+                -4815.5,
+                -5486.0,
+                -6413.0
+            ]
+        },
+        {
+            "name": "Nuclear",
+            "data": [
+                31488.0,
+                31427.8,
+                31400.2,
+                31560.5,
+                31758.1
+            ]
+        },
+        {
+            "name": "Hydro Run-of-River",
+            "data": [
+                2309.6,
+                2304.7,
+                2298.3,
+                2293.2,
+                2306.5
+            ]
+        },
+        {
+            "name": "Biomass",
+            "data": [
+                285.9,
+                286.3,
+                288.0,
+                288.9,
+                288.6
+            ]
+        },
+        {
+            "name": "Fossil oil",
+            "data": [
+                35.2,
+                35.2,
+                35.2,
+                35.2,
+                35.2
+            ]
+        },
+        {
+            "name": "Fossil gas",
+            "data": [
+                4362.4,
+                4111.5,
+                3798.8,
+                3823.9,
+                3859.1
+            ]
+        },
+        {
+            "name": "Hydro water reservoir",
+            "data": [
+                1510.0,
+                1153.2,
+                1137.4,
+                1139.0,
+                1112.6
+            ]
+        },
+        {
+            "name": "Hydro pumped storage",
+            "data": [
+                953.9,
+                866.5,
+                830.0,
+                513.6,
+                704.5
+            ]
+        },
+        {
+            "name": "Battery",
+            "data": [
+                3.0,
+                2.6,
+                2.5,
+                2.5,
+                1.4
+            ]
+        },
+        {
+            "name": "Waste",
+            "data": [
+                444.2,
+                446.6,
+                445.4,
+                447.1,
+                447.8
+            ]
+        },
+        {
+            "name": "Wind offshore",
+            "data": [
+                623.4,
+                624.1,
+                620.0,
+                654.4,
+                743.5
+            ]
+        },
+        {
+            "name": "Wind onshore",
+            "data": [
+                2642.8,
+                2649.0,
+                2598.4,
+                2672.2,
+                2872.5
+            ]
+        },
+        {
+            "name": "Solar",
+            "data": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        {
+            "name": "Load",
+            "data": [
+                39620.8,
+                38623.7,
+                37940.5,
+                37253.2,
+                36904.1
+            ]
+        },
+        {
+            "name": "Residual load",
+            "data": [
+                36354.6,
+                35350.6,
+                34722.1,
+                33926.6,
+                33288.1
+            ]
+        },
+        {
+            "name": "Renewable share of load",
+            "data": [
+                19.2,
+                18.7,
+                18.9,
+                19.5,
+                20.5
+            ]
+        },
+        {
+            "name": "Renewable share of generation",
+            "data": [
+                17.4,
+                16.8,
+                16.8,
+                16.9,
+                17.4
+            ]
+        }
+    ],
+    "deprecated": false
+}
