@@ -82,16 +82,16 @@ All observations below were made manually against the live API in August 2026.
 
 13. **Published values are revised retroactively.** A full-day response captured on 2026-08-19 was compared with the same request re-issued eight days later. The array grew from 34 to 96 points, and previously published values changed by roughly 0.01% (e.g. Load[0]: 40274.8 → 40270.4). Derived percentage series shifted more noticeably (Renewable share of generation[0]: 50.8 → 49.4). Both snapshots are stored in `docs/samples/` for reference.
 
-14. **Publication delay differs by country.** On 2026-08-31 Germany's data
-    was available up to roughly four hours before the request time, while
-    France returned HTTP 404 for the same window — no data at all. A single
-    lookback window has to accommodate the slowest country.
+14. **Publication delay differs by country.** On 2026-08-31 Germany's data was
+    available up to roughly four hours before the request time, while France
+    had published nothing since 05:45 the previous day. A single lookback
+    window cannot serve both.
 
-15. **The API returns HTTP 404 when no data exists for the requested window**,
-    rather than an empty response. This is indistinguishable from a genuine
-    error such as a wrong country code, so the pipeline treats it as
-    "no data yet" but counts consecutive occurrences and fails after six.
-
+15. **HTTP 404 signals that the requested window starts beyond the published
+    range**, not that data is sparse. A request covering 00:00–12:00 returned
+    data while 06:00–12:00 on the same day returned `no content available`,
+    because publication ended at 05:45. Widening the window backwards does not
+    help; only starting it earlier does.
     
 ## Consequences
 
@@ -123,6 +123,12 @@ All observations below were made manually against the live API in August 2026.
   loader must compare requested and received point counts and log the difference.
 - **An `accepted_values` test on production types**, so that a new or renamed
   indicator fails the pipeline instead of passing unnoticed.
+- **A separate daily backfill.** Publication delay varies by country beyond
+  what a single hourly window can absorb, and revisions arrive days later.
+  Two cycles are needed: a fast one for fresh data, a slow one for catching up.
+- **A snapshot of the fact table.** Merge-based loading applies revisions and
+  discards the previous value, so the revision behaviour itself has to be
+  captured separately.
 
 ### Open risks
 
