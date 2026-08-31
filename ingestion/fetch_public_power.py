@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 import psycopg2
 import requests
@@ -27,7 +28,13 @@ def fetch_public_power(country, date_from, date_to):
     }
 
     response = requests.get(API_URL, params=params, timeout=30)
-
+    if response.status_code == 429:
+        # The API rate-limits bursts. Backfill fans out over many days at
+        # once, so this is expected under load rather than a hard failure.
+        retry_after = int(response.headers.get("Retry-After", 30))
+        print(f"Rate limited, sleeping {retry_after}s before failing the task")
+        time.sleep(retry_after)
+        response.raise_for_status()
     if response.status_code == 404:
         # The API returns 404 when no data exists for the requested window.
         # This is expected for countries that publish with a longer delay,

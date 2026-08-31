@@ -13,6 +13,9 @@ from ingestion.fetch_public_power import (
 )
 
 COUNTRIES = ["de", "fr"]
+# Covers the typical publication delay for fast-publishing countries.
+# Slower countries and retroactive revisions are handled by the daily
+# backfill DAG, not by widening this window.
 LOOKBACK_HOURS = 6
 MAX_CONSECUTIVE_EMPTY = 6
 EMPTY_WINDOW_HOURS = 12

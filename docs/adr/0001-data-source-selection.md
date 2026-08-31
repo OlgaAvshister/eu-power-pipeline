@@ -75,11 +75,24 @@ All observations below were made manually against the live API in August 2026.
 
 11. **`deprecated` flag is `false`** for the v1 `/public_power` endpoint.
 
-12. **No authentication required.** No API key, no registration, no rate limit
-    observed during exploration.
+12. **No authentication required**, but the API does rate-limit. Manual
+    exploration never hit a limit; a backfill fanning out to 14 concurrent
+    requests received HTTP 429. Concurrency is capped and 429 is handled
+    with a Retry-After pause.
 
 13. **Published values are revised retroactively.** A full-day response captured on 2026-08-19 was compared with the same request re-issued eight days later. The array grew from 34 to 96 points, and previously published values changed by roughly 0.01% (e.g. Load[0]: 40274.8 → 40270.4). Derived percentage series shifted more noticeably (Renewable share of generation[0]: 50.8 → 49.4). Both snapshots are stored in `docs/samples/` for reference.
 
+14. **Publication delay differs by country.** On 2026-08-31 Germany's data
+    was available up to roughly four hours before the request time, while
+    France returned HTTP 404 for the same window — no data at all. A single
+    lookback window has to accommodate the slowest country.
+
+15. **The API returns HTTP 404 when no data exists for the requested window**,
+    rather than an empty response. This is indistinguishable from a genuine
+    error such as a wrong country code, so the pipeline treats it as
+    "no data yet" but counts consecutive occurrences and fails after six.
+
+    
 ## Consequences
 
 ### What we get for free
