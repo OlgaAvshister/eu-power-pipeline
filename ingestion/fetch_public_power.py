@@ -27,6 +27,13 @@ def fetch_public_power(country, date_from, date_to):
     }
 
     response = requests.get(API_URL, params=params, timeout=30)
+
+    if response.status_code == 404:
+        # The API returns 404 when no data exists for the requested window.
+        # This is expected for countries that publish with a longer delay,
+        # not a failure: the next run will pick the data up.
+        return None, response.url
+
     response.raise_for_status()
 
     return response.json(), response.url
@@ -60,6 +67,28 @@ def save_to_raw(payload, source_url, country, date_from, date_to):
 
     return points_received
 
+def count_recent_empty_loads(country, window_hours=12):
+    """Count how many recent load attempts for a country produced no data.
+
+    An empty result on its own is normal — some countries publish with a
+    longer delay. A long run of them is not: it usually means the endpoint,
+    the country code or the API contract has changed.
+    """
+    sql = """
+        select count(*)
+        from raw.public_power
+        where country = %s
+          and loaded_at >= now() - make_interval(hours => %s)
+          and points_received = 0
+    """
+
+    conn = psycopg2.connect(**DB_CONFIG)
+    try:
+        with conn, conn.cursor() as cur:
+            cur.execute(sql, (country, window_hours))
+            return cur.fetchone()[0]
+    finally:
+        conn.close()
 
 def main():
     country = "de"
