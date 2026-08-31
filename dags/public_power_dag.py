@@ -51,6 +51,7 @@ def public_power_ingestion():
         payload, url = fetch_public_power(country, date_from, date_to)
 
         if payload is None:
+            save_to_raw({}, url, country, date_from, date_to)
             recent_empty = count_recent_empty_loads(country)
             print(
                 f"No data published yet for {country} in this window "
