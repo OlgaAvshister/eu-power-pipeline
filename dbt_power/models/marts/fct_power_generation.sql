@@ -6,7 +6,13 @@
 
 select
     country,
-    ts_utc,
+        ts_utc,
+    ts_utc at time zone (
+        case country
+            when 'de' then 'Europe/Berlin'
+            when 'fr' then 'Europe/Paris'
+        end
+    ) as ts_local,
     production_type,
     category,
     unit,
