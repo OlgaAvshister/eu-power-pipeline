@@ -43,6 +43,12 @@ flowchart TB
     TESTS[10 dbt tests] -.validate.-> FCT
 ```
 
+### Model lineage
+
+![dbt lineage](docs/screenshots/dbt_lineage.png)
+
+Generated with `dbt docs generate`.
+
 ## Stack
 
 - **Ingestion:** Python, requests
