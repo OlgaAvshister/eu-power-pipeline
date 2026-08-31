@@ -11,18 +11,36 @@ End-to-end data pipeline for European electricity generation: scheduled ingestio
 ## Architecture
 
 ```mermaid
-flowchart LR
-    API[Energy-Charts API<br/>public_power] -->|hourly, 6h lookback| EX[Python extractor]
-    EX --> RAW[(raw.public_power<br/>JSONB + load metadata)]
-    RAW --> STG1[stg_public_power<br/>JSON unpivot]
-    STG1 --> STG2[stg_public_power_deduped<br/>row_number dedup]
+flowchart TB
+    API[Energy-Charts API<br/>public_power]
+
+    subgraph ingestion[Ingestion]
+        HOURLY[public_power_ingestion<br/>hourly, 6h lookback]
+        DAILY[public_power_backfill<br/>daily, 7 days per country]
+    end
+
+    API --> HOURLY
+    API --> DAILY
+    HOURLY --> RAW
+    DAILY --> RAW
+
+    RAW[(raw.public_power<br/>JSONB + load metadata)]
+
+    subgraph transform[dbt_transform DAG, hourly]
+        STG1[stg_public_power<br/>JSON unpivot]
+        STG2[stg_public_power_deduped<br/>dedup, prefer non-null]
+        STG3[stg_public_power_enriched<br/>join dimension]
+        FCT[(fct_power_generation<br/>incremental merge)]
+        SNAP[(snap_power_generation<br/>SCD2 revision history)]
+        REV[(mart_source_revisions<br/>restatement analytics)]
+    end
+
+    RAW --> STG1 --> STG2 --> STG3 --> FCT
     SEED[production_types<br/>seed] --> STG3
-    STG2 --> STG3[stg_public_power_enriched<br/>join dimension]
-    STG3 --> FCT[(fct_power_generation<br/>incremental, merge)]
+    FCT --> SNAP --> REV
     FCT --> BI[Metabase dashboard]
 
-    AF[Airflow scheduler] -.orchestrates.-> EX
-    TESTS[dbt tests] -.validate.-> FCT
+    TESTS[10 dbt tests] -.validate.-> FCT
 ```
 
 ## Stack
